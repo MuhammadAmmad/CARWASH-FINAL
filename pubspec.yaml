@@ -1,0 +1,63 @@
+name: car_wash_light
+description: A new Flutter project.
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  buttons_tabbar: ^1.3.8
+  cached_network_image: ^3.2.3
+  cupertino_icons: ^1.0.2
+ 
+
+  dotted_border: ^2.1.0
+  flutter:
+    sdk: flutter
+  flutter_colorpicker: ^1.0.3
+  flutter_svg: ^2.0.7
+  flutter_switch: ^0.3.2
+  get: ^4.6.5
+  google_fonts: ^5.1.0
+  shared_preferences: ^2.2.3
+  
+
+  #firebase dependencies
+  firebase_database: ^11.0.4
+  firebase_core:
+  firebase_auth: ^5.1.4
+  fluttertoast: ^8.2.8
+  cloud_firestore: ^5.2.1
+  firebase_storage: ^12.1.3
+  image_picker: ^1.1.2
+  permission_handler: ^11.3.1
+  geolocator: ^12.0.0
+  url_launcher: ^6.3.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  hive_generator: ^2.0.1
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  build_runner: ^2.4.9
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/images/
+
+  
+
+flutter_assets:
+  assets_path: assets/
+  output_path: lib/constants/
+  filename: app_images.dart
+  field_prefix: ""
