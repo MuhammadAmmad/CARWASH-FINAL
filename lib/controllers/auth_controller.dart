@@ -174,7 +174,7 @@ class AuthController extends GetxController {
     }
   }
 
-  // RETRIEVE USERNAME
+  // RETRIEVE USERNAME, IMAGE AND EMAIL
   Future<void> getUsernameAndImage() async {
     try {
       DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
@@ -185,8 +185,10 @@ class AuthController extends GetxController {
       if (documentSnapshot.exists) {
         String? username = documentSnapshot['username'];
         String? image = documentSnapshot['imageurl'];
+        String? email = documentSnapshot['email'];
         userName.value = username!;
         imageUrl.value = image!;
+        emailText.value = email!;
         print('Username: $username');
       } else {
         print('Document does not exist');

@@ -62,11 +62,11 @@ class Profile extends StatelessWidget {
                         Container(
                           width: 140,
                           height: 140,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Colors.black45,
                             shape: BoxShape.circle,
                           ),
-                          child: Center(
+                          child: const Center(
                             child: CircularProgressIndicator(
                               color: Colors.white,
                             ),
@@ -74,32 +74,35 @@ class Profile extends StatelessWidget {
                         ),
                     ],
                   )),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               Text(
                 auth.userName.value,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
+              //ADDING EMAIL TEXT HERE
+
               Text(
                 auth.emailText.value,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white70,
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton.icon(
                 onPressed: () async {
                   auth.changeImageLoading(true);
                   await auth.pickFileAndUpload();
                   auth.changeImageLoading(false);
                 },
-                icon: Icon(Icons.camera_alt, color: darkGreen),
-                label: Text("Change Photo", style: TextStyle(color: darkGreen)),
+                icon: const Icon(Icons.camera_alt, color: darkGreen),
+                label: const Text("Change Photo",
+                    style: TextStyle(color: darkGreen)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(

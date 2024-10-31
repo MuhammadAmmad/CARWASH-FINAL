@@ -1,32 +1,58 @@
 import 'package:car_wash_light/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
 
 class About extends StatelessWidget {
   const About({Key? key}) : super(key: key);
 
-  // Function to launch URLs (phone, email, or website) with error handling
   Future<void> _launchUrl(BuildContext context, String urlString) async {
     final Uri url = Uri.parse(urlString);
     try {
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url);
+      bool launched = false;
+      if (urlString.startsWith('tel:')) {
+        launched = await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else if (urlString.startsWith('mailto:')) {
+        launched = await launchUrl(url, mode: LaunchMode.externalApplication);
       } else {
+        launched = await launchUrl(url, mode: LaunchMode.externalApplication);
+      }
+
+      if (!launched) {
         throw 'Could not launch $url';
       }
     } catch (e) {
-      // Show an error dialog if launching fails
-      _showErrorDialog(context, 'Unable to open $urlString. Error: $e');
+      await _handleLaunchError(context, urlString, e.toString());
     }
   }
 
-  // Function to show error dialog
+  Future<void> _handleLaunchError(
+      BuildContext context, String urlString, String error) async {
+    String content = urlString;
+    if (urlString.startsWith('tel:')) {
+      content = urlString.substring(4); // Remove 'tel:' prefix
+    } else if (urlString.startsWith('mailto:')) {
+      content = urlString.substring(7); // Remove 'mailto:' prefix
+    }
+
+    await Clipboard.setData(ClipboardData(text: content));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Content copied to clipboard: $content'),
+        duration: const Duration(seconds: 3),
+      ),
+    );
+
+    _showErrorDialog(context,
+        'Unable to open $urlString. The content has been copied to your clipboard. Error: $error');
+  }
+
   void _showErrorDialog(BuildContext context, String message) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error'),
+          title: const Text('Notice'),
           content: Text(message),
           actions: <Widget>[
             TextButton(
@@ -95,34 +121,25 @@ class About extends StatelessWidget {
                   style: TextStyle(fontSize: 16, color: textLightGrey),
                 ),
                 const SizedBox(height: 20),
-
-                // Website Link
                 _buildInfoRow(
                   context,
                   Icons.link,
                   'MileHighLEDSystems.com',
                   'https://www.milehighledsystems.com',
                 ),
-
-                // Car Website Link
                 _buildInfoRow(
                   context,
                   Icons.link,
                   'CarWashLights.com',
                   'https://www.carwashlights.com',
                 ),
-
                 const SizedBox(height: 30),
-
-                // Phone Number Link
                 _buildInfoRow(
                   context,
                   Icons.phone,
                   '800-596-3772',
                   'tel:8005963772',
                 ),
-
-                // Email Link
                 _buildInfoRow(
                   context,
                   Icons.email,
